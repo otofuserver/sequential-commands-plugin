@@ -4,13 +4,17 @@ plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.13.6'
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 defaultTasks 'clean','build'
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'idea'
-sourceCompatibility = 1.8
 ext.rundeckPluginVersion= '2.0'
-ext.rundeckVersion= '3.4.x'
+ext.rundeckVersion= '5.12.x'
 ext.pluginClassNames='com.plugin.sequentialcommands.Sequentialcommands'
 
 repositories {
@@ -35,7 +39,7 @@ configurations{
 
 dependencies {
 
-    implementation 'org.rundeck:rundeck-core:3.4.4-20210920'
+    implementation 'org.rundeck:rundeck-core:5.12.0-20250512'
     implementation 'com.jcraft:jsch:0.1.55'
     implementation 'com.google.code.gson:gson:2.8.9'
 
