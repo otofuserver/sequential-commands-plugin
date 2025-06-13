@@ -11,7 +11,7 @@
 ![Screen Shot 2021-12-30 at 3 55 39 PM](https://user-images.githubusercontent.com/11511251/147795129-b5a593ec-82e8-4acd-a25b-69270fd8c55a.png)
 
 ## ビルド方法
-Java 1.8 環境で以下のコマンドを実行してください
+Java 11 環境で以下のコマンドを実行してください
 
 `gradle build`
 生成されたJARファイルは build/libs/ フォルダ内に出力されます。
