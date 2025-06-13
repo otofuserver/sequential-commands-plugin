@@ -1,23 +1,29 @@
 # Sequential SSH Commands Rundeck Plugin
 
-This is a Node Step Job plugin that sends commands to a remote node via SSH. The commands occur in the same SSH channel, and therefore share state.  This is particularly useful for network devices (see example below) or for compute resources when certain commands can strictly be executed from a particular working directory or with certain environment variables set.
+> ⚠ このプロジェクトは [jsboak/sequential-commands-plugin](https://github.com/jsboak/sequential-commands-plugin) をフォークしたものです。  
+> 元プロジェクトのライセンス（Apache License 2.0）に従って改変・再配布しています。
+
+このプラグインは、Rundeck における **Node Step Job** プラグインであり、リモートノードに対して **1つのSSHセッションで複数のコマンドを順番に送信**できます。
+
+同じSSHチャネル内でコマンドを実行するため、**状態（カレントディレクトリや環境変数）を共有したまま複数のコマンド**を実行することができます。  
+ネットワーク機器や、特定のディレクトリからでないと動かせないコマンドがあるシステムに最適です。
 
 ![Screen Shot 2021-12-30 at 3 55 39 PM](https://user-images.githubusercontent.com/11511251/147795129-b5a593ec-82e8-4acd-a25b-69270fd8c55a.png)
 
-## Build
-Run the following command to build the jar file (using Java 1.8):
+## ビルド方法
+Java 1.8 環境で以下のコマンドを実行してください
 
 `gradle build`
+生成されたJARファイルは build/libs/ フォルダ内に出力されます。
 
-Alternatively download the latest released Jar from the [Releases Page](https://github.com/jsboak/sequential-commands-plugin/releases)
 
-## Install
-Copy the `sequential-commands-plugin-x.y.x.jar` file to the `$RDECK_BASE/libext/` directory inside your Rundeck installation.
+## インストール方法
+生成された sequential-commands-plugin-x.y.z.jar を Rundeck の次のディレクトリへコピーしてください：
+$RDECK_BASE/libext/
+GUIからアップロードすることも可能です。詳しくは Rundeck公式ドキュメントの こちら を参照してください。
 
-Or you can upload the file through the GUI as described [here](https://docs.rundeck.com/docs/learning/howto/calling-apis.html#community-version-prerequisite).
-
-## Usage
-The plugin makes use of SSH credentials that are set on the nodes in Rundeck. If the `ssh-password-storage-path` attribute is set, then the plugin will authenticate using the SSH password, otherwise it will use the `ssh-key-storage-path` attribute.
+## 使用方法
+このプラグインは、Rundeckでノードに設定されたSSH認証情報を使用します。
 
 To add a command to the Job Step, click on **`Add Custom Field`**:
 
