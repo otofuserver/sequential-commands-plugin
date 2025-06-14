@@ -1,0 +1,29 @@
+[versions]
+rundeck = "5.12.0-20250512"
+jsch = "0.2.21"
+gson = "2.8.9"
+junit = "4.13.2"
+groovy = "3.0.8"
+spock = "2.0-groovy-3.0"
+cglib = "3.3.0"
+objenesis = "3.2"
+
+[libraries]
+rundeckCore = { group = "org.rundeck", name = "rundeck-core", version.ref = "rundeck" }
+jsch = { group = "com.github.mwiede", name = "jsch", version.ref = "jsch" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+groovyAll = { group = "org.codehaus.groovy", name = "groovy-all", version.ref = "groovy" }
+spock = { group = "org.spockframework", name = "spock-core", version.ref = "spock" }
+cglib = { group = "cglib", name = "cglib-nodep", version.ref = "cglib" }
+objenesis = { group = "org.objenesis", name = "objenesis", version.ref = "objenesis" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[bundles]
+testLibs = [
+    "groovyAll",
+    "spock",
+    "cglib",
+    "objenesis",
+    "junit"
+]
