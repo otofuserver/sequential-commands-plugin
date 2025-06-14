@@ -43,7 +43,7 @@ Field Label と Field Key を入力（これは識別用であり、コマンド
 ![Screen Shot 2022-03-16 at 11 10 58 AM](https://user-images.githubusercontent.com/11511251/158658778-aa5636a3-1c84-4c5f-a8a4-3e8e3cbe5c07.png)
 
 ## 使用例
-As an example, in the screenshot below, the order of commands send to the remote node would be: `enable`, then a secure-job-option containing the _enable password_ is sent to the device (this will not be shown in the logs output), this is then followed by the `terminal length 0` command and then finally the `show interfaces` command. 
+例えば、以下のスクリーンショットでは、リモートノードに送信されるコマンドの順序は次のようになります。次に有効化パスワード`enable`を含む secure-job-option がデバイスに送信され（これはログ出力には表示されません）、その後に コマンド、最後にコマンド が送信されます。
 You can view and download this example job [here](https://github.com/jsboak/sequential-commands-plugin/blob/main/example-jobs/Cisco_Router_-_Show_Interfaces.yaml).
 
 ![Screen Shot 2022-03-16 at 11 20 26 AM](https://user-images.githubusercontent.com/11511251/158660331-b6771155-8765-44bd-a752-53e31ec825cb.png)

@@ -1,7 +1,7 @@
 plugins {
     id 'groovy'
     id 'java'
-    id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+    id 'pl.allegro.tech.build.axion-release' version '1.16.1'
 }
 
 java {
@@ -13,7 +13,7 @@ defaultTasks 'clean','build'
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'idea'
-ext.rundeckPluginVersion= '2.0'
+ext.rundeckPluginVersion= '2.0.0'
 ext.rundeckVersion= '5.12.x'
 ext.pluginClassNames='com.plugin.sequentialcommands.Sequentialcommands'
 
@@ -21,7 +21,7 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
-
+//git hubのタグと連動
 scmVersion {
     useHighestVersion = true
 }
@@ -40,7 +40,7 @@ configurations{
 dependencies {
 
     implementation 'org.rundeck:rundeck-core:5.12.0-20250512'
-    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'com.github.mwiede:jsch:0.2.21'
     implementation 'com.google.code.gson:gson:2.8.9'
 
     //use pluginLibs to add dependecies, example:
@@ -64,14 +64,14 @@ jar {
         def libList = configurations.pluginLibs.collect{'lib/'+it.name}.join(' ')
 
         attributes 'Rundeck-Plugin-Classnames': pluginClassNames
-        attributes 'Rundeck-Plugin-File-Version': version
         attributes 'Rundeck-Plugin-Name': 'sequential-commands'
         attributes 'Rundeck-Plugin-Description': 'Provide a short description of your plugin here.'
-        attributes 'Rundeck-Plugin-Rundeck-Compatibility-Version': '3.x'
+        attributes 'Rundeck-Plugin-Rundeck-Compatibility-Version': '5.x'
         attributes 'Rundeck-Plugin-Tags': 'java,NodeStep'
         attributes 'Rundeck-Plugin-License': 'Apache 2.0'
         attributes 'Rundeck-Plugin-Source-Link': 'Please put the link to your source repo here'
         attributes 'Rundeck-Plugin-Target-Host-Compatibility': 'all'
+        attributes 'Rundeck-Plugin-File-Version': project.version
         attributes 'Rundeck-Plugin-Version': rundeckPluginVersion
         attributes 'Rundeck-Plugin-Archive': 'true'
         attributes 'Rundeck-Plugin-Libs': "${libList}"
