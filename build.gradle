@@ -34,7 +34,7 @@ configurations{
 
 dependencies {
     implementation libs.rundeckCore
-    implementation libs.jsch
+    pluginLibs(libs.jsch)
     implementation libs.gson
 
     testImplementation libs.bundles.testLibs
@@ -42,13 +42,18 @@ dependencies {
 
 // task to copy plugin libs to output/lib dir
 tasks.register('copyToLib', Copy) {
-    into "$buildDir/output/lib"
+    into layout.buildDirectory.dir("output/lib")
     from configurations.pluginLibs
 }
 
-tasks.named('jar') {
+tasks.named('jar', Jar).configure {
     dependsOn tasks.named('copyToLib')
-    from("$buildDir/output")
+
+    archiveBaseName.set("sequential-commands-plugin")
+    archiveVersion.set(project.version)
+
+    from(sourceSets.main.output) // .class ファイルを含める
+    from(layout.buildDirectory.dir("output")) // lib/ を含める
 
     manifest {
         def libList = configurations.pluginLibs.collect { "lib/${it.name}" }.join(' ')
