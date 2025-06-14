@@ -48,30 +48,43 @@ public class SSHConnect {
         }
         session.connect();
 
+        // 接続直後の機器応答待ち（例：ルーターのログインバナーなど）
+        try {
+            Thread.sleep(300); // 0.3秒待機
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new JSchException("Interrupted while waiting after SSH connect", e);
+        }
+
         return session;
     }
 
-    static void printResult(InputStream input,
-                            Channel channel) throws Exception {
-        int SIZE = 1024;
-        byte[] tmp = new byte[SIZE];
+    public static void printResult(InputStream input, Channel channel) throws Exception {
+        byte[] buffer = new byte[1024];
+        long lastRead = System.currentTimeMillis();
+        final long timeoutMillis = 2000; // 2秒無応答で終了
+
         while (true) {
-            while (input.available() > 0)
-            {
-                int i = input.read(tmp, 0, SIZE);
-                if(i < 0)
-                    break;
-                System.out.print(new String(tmp, 0, i));
+            if (input.available() > 0) {
+                int read = input.read(buffer);
+                if (read > 0) {
+                    System.out.print(new String(buffer, 0, read));
+                    lastRead = System.currentTimeMillis(); // 最後に受信した時間を更新
+                }
+            } else {
+                Thread.sleep(100); // 少しだけ待つ
             }
 
-            channel.disconnect();
-
-            if(channel.isClosed()) {
+            // 一定時間応答がないなら終了（プロンプトで止まるのを防ぐ）
+            if (System.currentTimeMillis() - lastRead > timeoutMillis) {
                 break;
             }
+        }
 
-            Thread.sleep(500);
+        if (channel.isConnected()) {
+            channel.disconnect();
         }
     }
+
 
 }
