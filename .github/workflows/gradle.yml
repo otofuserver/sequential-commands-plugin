@@ -4,8 +4,6 @@
 name: Java CI with Gradle, release for tagged
 on:
   push:
-    tags:
-      - 'v2.0.4'
 
 jobs:
   build:
