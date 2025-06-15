@@ -4,6 +4,7 @@
 name: Java CI with Gradle, release for tagged
 on:
   push:
+    branches: [main]
 
 jobs:
   build:
