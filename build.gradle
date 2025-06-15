@@ -7,6 +7,10 @@ plugins {
 group = 'com.rundeck'
 version = scmVersion.version
 
+ext {
+    rundeckPluginVersion = version  // ← これで OK！
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
