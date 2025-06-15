@@ -66,7 +66,7 @@ public class Sequentialcommands implements NodeStepPlugin, Describable{
    /**
      * This enum lists the known reasons this plugin might fail
      */
-   static enum Reason implements FailureReason{
+   enum Reason implements FailureReason{
        SSHKeyNotFound,
        KeyStorage
    }
@@ -112,14 +112,11 @@ public class Sequentialcommands implements NodeStepPlugin, Describable{
                   InputStream input = channel.getInputStream();
 
                   for (JsonElement customField : customFields) {
-
                       JsonObject cmdJson = customField.getAsJsonObject();
-                      String value = cmdJson.get("value").toString();
-                      String rawCommand = value.substring(1, value.length()-1);
+                      String rawCommand = cmdJson.get("value").getAsString();
 
                       ps.println(rawCommand);
                       Thread.sleep(500);
-
                   }
 
                   ps.close();
@@ -129,7 +126,12 @@ public class Sequentialcommands implements NodeStepPlugin, Describable{
                   session.disconnect();
 
               } catch (Exception e) {
-                  e.printStackTrace();
+                  throw new NodeStepException(
+                          "SSH command execution failed: " + e.getMessage(),
+                          e,
+                          Reason.KeyStorage,
+                          entry.getNodename()
+                  );
               }
           }
       }
