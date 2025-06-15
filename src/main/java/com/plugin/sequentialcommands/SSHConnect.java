@@ -34,7 +34,7 @@ public class SSHConnect {
         JSch jsch = new JSch();
         Session session = jsch.getSession(userName, hostName, 22);
 
-        if (strictHostKey.equals("true")) {
+        if ("true".equalsIgnoreCase(strictHostKey)) {
             session.setConfig("strictHostKeyChecking", "yes");
         } else {
             session.setConfig("StrictHostKeyChecking", "no");
