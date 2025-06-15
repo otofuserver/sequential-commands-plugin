@@ -5,7 +5,7 @@ name: Java CI with Gradle, release for tagged
 on:
   push:
     branches: [main]
-    tags: [v2.*]
+    tags: [v2.*.*]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,14 +45,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    #if: startsWith(github.ref, 'refs/tags/')
+    if: github.ref_type == 'tag'
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: JAR Artifact
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: '${{ github.workspace }}/sequential-commands-plugin-${{ needs.build.outputs.VERSION }}.jar'
           fail_on_unmatched_files: true
