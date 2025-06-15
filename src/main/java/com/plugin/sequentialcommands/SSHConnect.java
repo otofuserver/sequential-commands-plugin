@@ -13,11 +13,11 @@ This Rundeck plugin is used to send sequential commands via SSH.
  */
 public class SSHConnect {
 
-    private String userName;
-    private String sshKeyPass;
-    private String hostName;
-    private String strictHostKey;
-    boolean usePrivKey;
+    private final String userName;
+    private final String sshKeyPass;
+    private final String hostName;
+    private final String strictHostKey;
+    private final boolean usePrivKey;
 
     public SSHConnect(String userName, String sshKeyPass, String hostName, boolean usePrivKey, String strictHostKey) {
 
