@@ -2,10 +2,13 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
 name: Java CI with Gradle, release for tagged
-on:
-  push:
-    tags:
-      - 'v2.0.3'  # 例: v2.0.0
+on: push
+#on:
+#  push:
+#    branches:
+#      - main
+#    tags:
+#      - "*"
 
 jobs:
   build:
