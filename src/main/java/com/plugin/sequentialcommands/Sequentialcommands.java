@@ -60,6 +60,14 @@ public class Sequentialcommands implements NodeStepPlugin, Describable{
                     .renderingOption(StringRenderingConstants.GROUP_NAME,"SSH Settings")
                     .build()
             )
+            .property(PropertyBuilder.builder()
+                    .string("errorKeywords")
+                    .title("Error Keywords")
+                    .description("If the command output contains any of these keywords, the step will fail. Use commas (,) to separate multiple values.")
+                    .renderingOption(StringRenderingConstants.GROUP_NAME, "Failure Matching")
+                    .required(false)
+                    .build()
+            )
             .build();
    }
 
@@ -78,6 +86,7 @@ public class Sequentialcommands implements NodeStepPlugin, Describable{
 
           String userName = entry.getAttributes().get("username");
           String hostname = entry.getAttributes().get("hostname");
+          String keywordString = (String) configuration.get("errorKeywords");
           String sshKeyStoragePath;
           boolean usePrivKey;
           String sshPrivKey;
@@ -120,7 +129,7 @@ public class Sequentialcommands implements NodeStepPlugin, Describable{
                   }
 
                   ps.close();
-                  SSHConnect.printResult(input, channel);
+                  SSHConnect.printResult(input, channel, keywordString);
 
                   channel.disconnect();
                   session.disconnect();

@@ -59,23 +59,26 @@ public class SSHConnect {
         return session;
     }
 
-    public static void printResult(InputStream input, Channel channel) throws Exception {
+    public static void printResult(InputStream input, Channel channel, String errorKeywords) throws Exception {
         byte[] buffer = new byte[1024];
         long lastRead = System.currentTimeMillis();
-        final long timeoutMillis = 2000; // 2秒無応答で終了
+        final long timeoutMillis = 2000;
+
+        StringBuilder outputBuilder = new StringBuilder();
 
         while (true) {
             if (input.available() > 0) {
                 int read = input.read(buffer);
                 if (read > 0) {
-                    System.out.print(new String(buffer, 0, read));
-                    lastRead = System.currentTimeMillis(); // 最後に受信した時間を更新
+                    String chunk = new String(buffer, 0, read);
+                    System.out.print(chunk);
+                    outputBuilder.append(chunk);
+                    lastRead = System.currentTimeMillis();
                 }
             } else {
-                Thread.sleep(100); // 少しだけ待つ
+                Thread.sleep(100);
             }
 
-            // 一定時間応答がないなら終了（プロンプトで止まるのを防ぐ）
             if (System.currentTimeMillis() - lastRead > timeoutMillis) {
                 break;
             }
@@ -83,6 +86,19 @@ public class SSHConnect {
 
         if (channel.isConnected()) {
             channel.disconnect();
+        }
+
+        // エラーワードチェック（大文字小文字無視、空白やnullなら無視）
+        if (errorKeywords != null && !errorKeywords.trim().isEmpty()) {
+            String resultOutput = outputBuilder.toString().toLowerCase();  // 出力を小文字に変換
+
+            String[] keywords = errorKeywords.split(",");
+            for (String keyword : keywords) {
+                String trimmed = keyword.trim().toLowerCase(); // キーワードも小文字に変換
+                if (!trimmed.isEmpty() && resultOutput.contains(trimmed)) {
+                    throw new RuntimeException("SSH command failed. Detected error output matching keyword (case-insensitive): " + keyword.trim());
+                }
+            }
         }
     }
 
