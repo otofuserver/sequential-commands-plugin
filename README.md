@@ -1,7 +1,9 @@
 # Sequential SSH Commands Rundeck Plugin
 
 > ⚠ このプロジェクトは [jsboak/sequential-commands-plugin](https://github.com/jsboak/sequential-commands-plugin) をフォークしたものです。  
-> 元プロジェクトのライセンス（Apache License 2.0）に従って改変・再配布しています。
+> 元プロジェクトのライセンス（Apache License 2.0）に従って改変・再配布しています。  
+> また本プラグインはv2.0.5まではフォーク元のリファクタリングのみを実施していますのでそのままプラグインファイルを置き換えるだけで使用できます。  
+> それ以降のバージョンは機能追加を含んでいるため更改が必要になる可能性があります
 
 このプラグインは、Rundeck における **Node Step Job** プラグインであり、リモートノードに対して **1つのSSHセッションで複数のコマンドを順番に送信**できます。
 
@@ -18,15 +20,13 @@ Java 11 環境で以下のコマンドを実行してください
 
 
 ## インストール方法
-生成された sequential-commands-plugin-x.y.z.jar を Rundeck の次のディレクトリへコピーしてください：
-$RDECK_BASE/libext/
-GUIからアップロードすることも可能です。詳しくは Rundeck公式ドキュメントの こちら を参照してください。
+生成された sequential-commands-plugin-x.y.z.jar を Rundeck の次のディレクトリへコピーしてください  
+$RDECK_BASE/libext/  
+GUIからアップロードすることも可能です。詳しくは、Rundeck公式ドキュメントの[こちら](https://docs.rundeck.com/docs/learning/howto/calling-apis.html#community-version-prerequisite)を参照してください。
 
 ## 使用方法
-このプラグインは、Rundeckでノードに設定されたSSH認証情報を使用します。
-
-ssh-password-storage-path 属性が設定されていればパスワード認証
-設定されていなければ ssh-key-storage-path による鍵認証
+このプラグインは、Rundeckでノードに設定されたSSH認証情報を使用します。  
+ssh-password-storage-path 属性が設定されていればパスワード認証を使用し、設定されていなければ ssh-key-storage-path による鍵認証が使用されます
 
 ![Screen Shot 2022-03-16 at 11 03 31 AM](https://user-images.githubusercontent.com/11511251/158657441-0dc90855-fe4f-461b-a20b-9d5a1968ade6.png)
 
